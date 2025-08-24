@@ -1,4 +1,5 @@
 const pin = 1234;
+const transactionData = [];
 
 // function to toggle
 function handleToggle(id) {
@@ -54,6 +55,13 @@ document
 
     document.getElementById('available-balance').innerText =
       totalNewAvailableBalance;
+
+    const data = {
+      name: 'Add Money',
+      date: new Date().toLocaleTimeString(),
+    };
+    transactionData.push(data);
+    console.log(transactionData);
   });
 
 //   cash out function
@@ -81,7 +89,48 @@ document.getElementById('withdraw-btn').addEventListener('click', function (e) {
 
   document.getElementById('available-balance').innerText =
     totalNewAvailableBalance;
+
+  const data = {
+    name: 'Cash Out',
+    date: new Date().toLocaleTimeString(),
+  };
+  transactionData.push(data);
+  console.log(transactionData);
 });
+
+// transaction
+document
+  .getElementById('transaction-card')
+  .addEventListener('click', function () {
+    const transactionContainer = document.getElementById(
+      'transaction-container'
+    );
+    transactionContainer.innerText = '';
+
+    for (const data of transactionData) {
+      const div = document.createElement('div');
+      div.innerHTML = `
+      <div
+            class="bg-white rounded-xl p-3 flex justify-between items-center"
+          >
+            <div class="flex items-center gap-4">
+              <div class="rounded-full p-3 bg-[#f4f5f7]">
+                <img src="./assets/wallet1.png" alt="" />
+              </div>
+              <div>
+                <h1>${data.name}</h1>
+                <p>${data.date}</p>
+              </div>
+            </div>
+            
+              <i class="fa-solid fa-ellipsis-vertical text-[#08080880]"></i>
+            
+          </div>
+      `;
+
+      transactionContainer.appendChild(div);
+    }
+  });
 
 // toggling feature
 document
